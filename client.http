@@ -1,7 +1,25 @@
-GET http://localhost:3333/users
+@baseUrl = http://localhost:3333
+@authToken = {{login.response.body.accessToken}}
+
+# @name list_users
+GET {{baseUrl}}/users
+Authorization: Bearer {{authToken}}
 
 ###
-POST http://localhost:3333/users
+
+# @name create_user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "victor@victor.com",
+  "password": "123456"
+}
+
+###
+
+# @name login
+POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
