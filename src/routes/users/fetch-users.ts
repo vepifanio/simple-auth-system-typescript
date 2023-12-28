@@ -1,7 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import jwt from 'jsonwebtoken'
-import { database } from '../../database'
-import { User } from './create-user'
+import { FetchUsersUseCase } from '../../use-cases/FetchUsers'
 
 export async function fetchUsers(app: FastifyInstance) {
   app.get('/', async (request, reply) => {
@@ -29,11 +28,8 @@ export async function fetchUsers(app: FastifyInstance) {
       }
     })
 
-    const users = await database<User>('users').select(
-      'id',
-      'email',
-      'created_at',
-    )
+    const fetchUsersUseCase = new FetchUsersUseCase()
+    const users = await fetchUsersUseCase.execute()
 
     return reply.send({
       users,
