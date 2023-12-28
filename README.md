@@ -36,6 +36,12 @@ Run migrations
 npm run knex:migrate:latest
 ```
 
+Start application
+
+```bash
+npm run start:dev
+```
+
 ## Technologies
 
 - Node.js
