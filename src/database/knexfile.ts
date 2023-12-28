@@ -1,17 +1,27 @@
 import type { Knex } from 'knex'
+import dotenv from 'dotenv'
+import path from 'path'
+
+const envPath = path.join(__dirname, '..', '..', '.env')
+
+dotenv.config({
+  path: envPath,
+})
 
 // Update with your config settings.
 
-export const config: { [key: string]: Knex.Config } = {
+const connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:5432/${process.env.POSTGRES_DB}`
+
+const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'pg',
     connection: {
-      connectionString: 'postgresql://docker:postgres@localhost:5432/postgres',
-      host: 'localhost',
+      connectionString,
+      host: process.env.POSTGRES_HOST,
       port: 5432,
-      user: 'docker',
-      password: 'postgres',
-      database: 'postgres',
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
     },
     pool: {
       min: 2,
@@ -54,3 +64,5 @@ export const config: { [key: string]: Knex.Config } = {
   //   },
   // },
 }
+
+export default config
