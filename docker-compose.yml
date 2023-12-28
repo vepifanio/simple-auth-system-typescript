@@ -4,11 +4,14 @@ services:
     ports:
       - "3333:3333"
     depends_on:
-      - postgres
+      - postgres-auth
     volumes:
       - ./:/usr/src/app
+    networks:
+      - app-connect
 
-  postgres:
+  postgres-auth:
+    container_name: postgres-auth
     image: postgres:alpine
     restart: always
     env_file:
@@ -17,5 +20,12 @@ services:
       - "5432:5432"
     volumes:
       - data:/var/lib/postgresql/data
+    networks:
+      - app-connect
+
 volumes:
   data:
+
+networks:
+  app-connect:
+      driver: bridge
