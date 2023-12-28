@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/server.js",
-    "start:dev": "tsx --watch src/server.ts",
+    "start:dev": "docker compose up -d --build && tsx --watch src/server.ts",
+    "stop": "docker compose stop",
+    "down": "docker compose down --rmi all",
     "knex:migrate:make": "knex migrate:make --knexfile src/database/knexfile.ts",
     "knex:migrate:latest": "knex migrate:latest --knexfile src/database/knexfile.ts",
     "knex:migrate:rollback": "knex migrate:rollback --knexfile src/database/knexfile.ts"
