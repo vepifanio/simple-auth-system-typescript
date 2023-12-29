@@ -1,7 +1,7 @@
 import { hash } from 'bcryptjs'
-import { database } from '../database'
 import { User } from '../entity/User'
 import { EmailAlreadyInUseError } from '../errors/EmailAlreadyInUseError'
+import { UsersRepository } from '../repository/UsersRepository'
 
 interface CreateUserData {
   email: string
@@ -9,10 +9,10 @@ interface CreateUserData {
 }
 
 export class CreateUserUseCase {
+  constructor(private usersRepository: UsersRepository) {}
+
   async execute({ email, password }: CreateUserData): Promise<void> {
-    const emailAlreadyInUse = await database<User>('users')
-      .first()
-      .where('email', email)
+    const emailAlreadyInUse = await this.usersRepository.findByEmail(email)
 
     if (emailAlreadyInUse) {
       throw new EmailAlreadyInUseError()
@@ -20,9 +20,11 @@ export class CreateUserUseCase {
 
     const hashedPassword = await hash(password, 8)
 
-    await database<User>('users').insert({
+    const user = User.create({
       email,
       password: hashedPassword,
     })
+
+    await this.usersRepository.save(user)
   }
 }

@@ -1,13 +1,10 @@
-import { database } from '../database'
-import { User } from '../entity/User'
+import { UsersRepository } from '../repository/UsersRepository'
 
 export class FetchUsersUseCase {
+  constructor(private usersRepository: UsersRepository) {}
+
   async execute() {
-    const users = await database<User>('users').select(
-      'id',
-      'email',
-      'created_at',
-    )
+    const users = await this.usersRepository.findAll()
 
     return users
   }

@@ -1,7 +1,6 @@
 import { compare } from 'bcryptjs'
-import { database } from '../database'
-import { User } from '../entity/User'
 import { InvalidCredentialsError } from '../errors/InvalidCredentialsError'
+import { UsersRepository } from '../repository/UsersRepository'
 
 interface AuthenticateUseCaseData {
   email: string
@@ -9,8 +8,10 @@ interface AuthenticateUseCaseData {
 }
 
 export class AuthenticateUseCase {
+  constructor(private usersRepository: UsersRepository) {}
+
   async execute({ email, password }: AuthenticateUseCaseData) {
-    const user = await database<User>('users').first().where('email', email)
+    const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
       throw new InvalidCredentialsError()
