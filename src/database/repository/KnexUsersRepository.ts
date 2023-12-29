@@ -1,6 +1,6 @@
 import { database } from '..'
-import { User } from '../../entity/User'
-import { UsersRepository } from '../../repository/UsersRepository'
+import { User } from '../../application/entity/User'
+import { UsersRepository } from '../../application/repository/UsersRepository'
 
 export class KnexUsersRepository implements UsersRepository {
   async findAll(): Promise<User[]> {

@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
-import { AuthenticateUseCase } from '../../use-cases/Authenticate'
-import { InvalidCredentialsError } from '../../errors/InvalidCredentialsError'
+import { AuthenticateUseCase } from '../../application/use-cases/Authenticate'
+import { InvalidCredentialsError } from '../../application/errors/InvalidCredentialsError'
 import { KnexUsersRepository } from '../../database/repository/KnexUsersRepository'
 
 const loginRequestBodySchema = z.object({
