@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import jwt from 'jsonwebtoken'
 import { FetchUsersUseCase } from '../../use-cases/FetchUsers'
+import { KnexUsersRepository } from '../../database/repository/KnexUsersRepository'
 
 export async function fetchUsers(app: FastifyInstance) {
   app.get('/', async (request, reply) => {
@@ -28,7 +29,9 @@ export async function fetchUsers(app: FastifyInstance) {
       }
     })
 
-    const fetchUsersUseCase = new FetchUsersUseCase()
+    const usersRepository = new KnexUsersRepository()
+    const fetchUsersUseCase = new FetchUsersUseCase(usersRepository)
+
     const users = await fetchUsersUseCase.execute()
 
     return reply.send({
