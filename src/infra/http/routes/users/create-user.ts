@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
-import { CreateUserUseCase } from '../../application/use-cases/CreateUser'
-import { EmailAlreadyInUseError } from '../../application/errors/EmailAlreadyInUseError'
-import { KnexUsersRepository } from '../../database/repository/KnexUsersRepository'
+import { EmailAlreadyInUseError } from '../../../../application/errors/EmailAlreadyInUseError'
+import { CreateUserUseCase } from '../../../../application/use-cases/CreateUser'
+import { KnexUsersRepository } from '../../../database/repository/KnexUsersRepository'
 
 const createUserRequestBodySchema = z.object({
   email: z.string().email(),

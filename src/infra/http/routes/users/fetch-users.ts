@@ -1,8 +1,7 @@
 import { FastifyInstance } from 'fastify'
-import jwt from 'jsonwebtoken'
-import { FetchUsersUseCase } from '../../application/use-cases/FetchUsers'
-import { KnexUsersRepository } from '../../database/repository/KnexUsersRepository'
 import { jwtAuth } from '../../auth/jwtAuth'
+import { FetchUsersUseCase } from '../../../../application/use-cases/FetchUsers'
+import { KnexUsersRepository } from '../../../database/repository/KnexUsersRepository'
 
 export async function fetchUsers(app: FastifyInstance) {
   app.addHook('preHandler', jwtAuth)

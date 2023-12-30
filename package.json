@@ -1,16 +1,17 @@
 {
   "name": "auth-system",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Auth System using Typescript.",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/server.js",
-    "start:dev": "docker compose up -d --build && tsx --watch src/server.ts",
+    "start": "tsc && node dist/infra/http/server.js",
+    "start:dev": "docker compose up -d --build && tsx --watch src/infra/http/server.ts",
     "stop": "docker compose stop",
-    "down": "docker compose down --rmi all",
-    "knex:migrate:make": "knex migrate:make --knexfile src/database/knexfile.ts",
-    "knex:migrate:latest": "knex migrate:latest --knexfile src/database/knexfile.ts",
-    "knex:migrate:rollback": "knex migrate:rollback --knexfile src/database/knexfile.ts"
+    "down": "docker compose down",
+    "knex:migrate:make": "knex migrate:make --knexfile src/infra/database/knexfile.ts",
+    "knex:migrate:latest": "knex migrate:latest --knexfile src/infra/database/knexfile.ts",
+    "knex:migrate:rollback": "knex migrate:rollback --knexfile src/infra/database/knexfile.ts",
+    "lint:fix": "eslint --fix"
   },
   "keywords": [],
   "author": "",
