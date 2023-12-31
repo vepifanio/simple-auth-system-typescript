@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import { AuthenticateUseCase } from '../../../../application/use-cases/Authenticate'
 import { InvalidCredentialsError } from '../../../../application/errors/InvalidCredentialsError'
-import { KnexUsersRepository } from '../../../database/repository/KnexUsersRepository'
+import { container, TOKENS } from '../../../di/container'
 
 const loginRequestBodySchema = z.object({
   email: z.string().email(),
@@ -14,7 +14,7 @@ const loginRequestBodySchema = z.object({
 export async function loginRoutes(app: FastifyInstance) {
   app.post('/', async (request, reply) => {
     const { email, password } = loginRequestBodySchema.parse(request.body)
-    const usersRepository = new KnexUsersRepository()
+    const usersRepository = container.get(TOKENS.userRepository)
     const authenticateUseCase = new AuthenticateUseCase(usersRepository)
 
     try {

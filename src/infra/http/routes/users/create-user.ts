@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { EmailAlreadyInUseError } from '../../../../application/errors/EmailAlreadyInUseError'
 import { CreateUserUseCase } from '../../../../application/use-cases/CreateUser'
-import { KnexUsersRepository } from '../../../database/repository/KnexUsersRepository'
+import { TOKENS, container } from '../../../di/container'
 
 const createUserRequestBodySchema = z.object({
   email: z.string().email(),
@@ -14,7 +14,7 @@ const createUserRequestBodySchema = z.object({
 export async function createUserRoute(app: FastifyInstance) {
   app.post('/', async (request, reply) => {
     const { email, password } = createUserRequestBodySchema.parse(request.body)
-    const usersRepository = new KnexUsersRepository()
+    const usersRepository = container.get(TOKENS.userRepository)
     const createUserUseCase = new CreateUserUseCase(usersRepository)
 
     try {
