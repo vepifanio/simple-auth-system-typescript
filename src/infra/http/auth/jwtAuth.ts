@@ -21,7 +21,7 @@ export async function jwtAuth(request: FastifyRequest, reply: FastifyReply) {
   jwt.verify(accessToken, process.env.JWT_SECRET, (error, decoded) => {
     if (error) {
       return reply.status(401).send({
-        message: 'Unauthorized',
+        message: 'Unauthorized.',
       })
     }
 
